@@ -7,21 +7,13 @@ from api.convert_store_id import *
 
 app = FastAPI()
 
-app = FastAPI()
-
 
 @app.get("/trigger_report")
 def trigger_report():
-    # in store status timestamp is in datetime format
-    # in store hours timestamp is in time format
-    # calculate uptime and downtime of stores using data in store_status.csv
     convert_store_id()
     convert_timestamps()
     store_status = pd.read_csv('store_status.csv')
     store_hours = pd.read_csv('store_hours.csv')
-
-    # store_status['timestamp_local'] = pd.to_datetime(store_status['timestamp_local'])
-    # store_status['timestamp_local'] = store_status['timestamp_local'].dt.time
     
     # sort store status by day_of_week and then timestamp
     store_status = store_status.sort_values(by=['timestamp_local'])
